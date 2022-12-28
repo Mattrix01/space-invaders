@@ -1,4 +1,7 @@
 const grid = document.querySelector(".grid");
+let currentShooterIndex = 202;
+// defining width for the moveSHooter function.
+let width = 15;
 
 // for loop creating 225 div squares
 for (let i = 0; i < 225; i++) {
@@ -21,3 +24,24 @@ function draw() {
 }
 
 draw();
+
+squares[currentShooterIndex].classList.add("shooter");
+
+// moving shooter, passing through event
+function moveShooter(e) {
+  squares[currentShooterIndex].classList.remove("shooter");
+  // switch out the key we are using
+  switch (e.key) {
+    case "ArrowLeft":
+      // as long as no remainder can move our current shooter on to the left
+      if (currentShooterIndex % width !== 0) currentShooterIndex -= 1;
+      break;
+    case "ArrowRight":
+      if (currentShooterIndex % width < width - 1) currentShooterIndex += 1;
+      break;
+  }
+  squares[currentShooterIndex].classList.add("shooter");
+}
+
+// listening for keydowns
+document.addEventListener("keydown", moveShooter);
