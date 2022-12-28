@@ -25,6 +25,12 @@ function draw() {
 
 draw();
 
+function remove() {
+  for (let i = 0; i < alienInvaders.length; i++) {
+    squares[alienInvaders[i]].classList.remove("invader");
+  }
+}
+
 squares[currentShooterIndex].classList.add("shooter");
 
 // moving shooter, passing through event
@@ -45,3 +51,21 @@ function moveShooter(e) {
 
 // listening for keydowns
 document.addEventListener("keydown", moveShooter);
+
+function moveInvaders() {
+  // defining and checking if on the left edge, remainder of 0
+  const LeftEdge = alienInvaders[0] % width === 0;
+  // defining right edge
+  const rightEdge =
+    alienInvaders[alienInvaders.length - 1] % width === width - 1;
+  remove();
+
+  for (let i = 0; i < alienInvaders.length; i++) {
+    alienInvaders[i] += 1;
+  }
+
+  draw();
+}
+
+// execute this function every 0.5 secs
+setInterval(moveInvaders, 500);
