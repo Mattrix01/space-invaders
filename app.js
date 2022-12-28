@@ -6,6 +6,7 @@ let width = 15;
 let direction = 1;
 let indvadersId;
 let goingRight = true;
+let aliensRemoved = [];
 
 // for loop creating 225 div squares
 for (let i = 0; i < 225; i++) {
@@ -101,7 +102,6 @@ function moveInvaders() {
 // execute this function every 0.5 secs
 indvadersId = setInterval(moveInvaders, 100);
 
-// this runs when you click up
 function shoot(e) {
   let laserId;
   // where our laser is starting from
@@ -111,10 +111,22 @@ function shoot(e) {
     currentLaserIndex -= width;
     squares[currentLaserIndex].classList.add("laser");
     // remove invader class when shot
-    if (squares[currentLaserIndex].classList.contains("indvader")) {
+    if (squares[currentLaserIndex].classList.contains("invader")) {
       squares[currentLaserIndex].classList.remove("laser");
       squares[currentLaserIndex].classList.remove("invader");
       squares[currentLaserIndex].classList.add("boom");
+      // removing boom after 300ms
+      setTimeout(
+        () => squares[currentLaserIndex].classList.remove("boom"),
+        300
+      );
+      clearInterval(laserId);
+      // removing alien when hit
+      const alienRemoved = alienInvaders.indexOf(currentLaserIndex);
+      aliensRemoved.push(alienRemoved);
+      results++;
+      resultsDisplay.innerHTML = results;
+      console.log(aliensRemoved);
     }
   }
   switch (e.key) {
