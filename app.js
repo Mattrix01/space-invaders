@@ -2,6 +2,9 @@ const grid = document.querySelector(".grid");
 let currentShooterIndex = 202;
 // defining width for the moveSHooter function.
 let width = 15;
+let direction = 1;
+let indvadersId;
+let goingRight = true;
 
 // for loop creating 225 div squares
 for (let i = 0; i < 225; i++) {
@@ -60,12 +63,28 @@ function moveInvaders() {
     alienInvaders[alienInvaders.length - 1] % width === width - 1;
   remove();
 
+  if (rightEdge && goingRight) {
+    for (let i = 0; i < alienInvaders.length; i++) {
+      alienInvaders[i] += width + 1;
+      direction = -1;
+      goingRight = false;
+    }
+  }
+
+  if (LeftEdge && !goingRight) {
+    for (let i = 0; i < alienInvaders.length; i++) {
+      alienInvaders[i] += width - 1;
+      direction = 1;
+      goingRight = true;
+    }
+  }
+
   for (let i = 0; i < alienInvaders.length; i++) {
-    alienInvaders[i] += 1;
+    alienInvaders[i] += direction;
   }
 
   draw();
 }
 
 // execute this function every 0.5 secs
-setInterval(moveInvaders, 500);
+indvadersId = setInterval(moveInvaders, 500);
