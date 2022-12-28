@@ -24,7 +24,9 @@ const alienInvaders = [
 // over each of aliens array, add class invader
 function draw() {
   for (let i = 0; i < alienInvaders.length; i++) {
-    squares[alienInvaders[i]].classList.add("invader");
+    if (!aliensRemoved.includes(i)) {
+      squares[alienInvaders[i]].classList.add("invader");
+    }
   }
 }
 
