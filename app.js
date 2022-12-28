@@ -3,7 +3,7 @@ const grid = document.querySelector(".grid");
 // for loop creating 225 div squares
 for (let i = 0; i < 225; i++) {
   const square = document.createElement("div");
-  grid.appendChuld(square);
+  grid.appendChild(square);
 }
 
 const squares = Array.from(document.querySelectorAll(".grid div"));
@@ -13,4 +13,11 @@ const alienInvaders = [
   32, 33, 34, 35, 36, 37, 38, 39,
 ];
 
-function draw()
+// over each of aliens array, add class invader
+function draw() {
+  for (let i = 0; i < alienInvaders.length; i++) {
+    squares[alienInvaders[i]].classList.add("invader");
+  }
+}
+
+draw();
