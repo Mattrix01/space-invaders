@@ -1,4 +1,5 @@
 const grid = document.querySelector(".grid");
+const resultsDisplay = document.querySelector(".results");
 let currentShooterIndex = 202;
 // defining width for the moveSHooter function.
 let width = 15;
@@ -84,7 +85,42 @@ function moveInvaders() {
   }
 
   draw();
+  // checking if invader and shooter on same block for game over and stop movement interval
+  if (squares[currentShooterIndex].classList.contains("invader", "shooter")) {
+    resultsDisplay.innerHTML = "GAME OVER!";
+    clearInterval(indvadersId);
+  }
+
+  for (let i = 0; i < alienInvaders.length; i++) {
+    if (alienInvaders[i] > squares.length) {
+      resultsDisplay.innerHTML = "GAME OVER!";
+      clearInterval(indvadersId);
+    }
+  }
+}
+// execute this function every 0.5 secs
+indvadersId = setInterval(moveInvaders, 100);
+
+// this runs when you click up
+function shoot(e) {
+  let laserId;
+  // where our laser is starting from
+  let currentLaserIndex = currentShooterIndex;
+  function moveLaser() {
+    squares[currentLaserIndex].classList.remove("laser");
+    currentLaserIndex -= width;
+    squares[currentLaserIndex].classList.add("laser");
+    // remove invader class when shot
+    if (squares[currentLaserIndex].classList.contains("indvader")) {
+      squares[currentLaserIndex].classList.remove("laser");
+      squares[currentLaserIndex].classList.remove("invader");
+      squares[currentLaserIndex].classList.add("boom");
+    }
+  }
+  switch (e.key) {
+    case "ArrowUp":
+      laserId = setInterval(moveLaser, 100);
+  }
 }
 
-// execute this function every 0.5 secs
-indvadersId = setInterval(moveInvaders, 500);
+document.addEventListener("keydown", shoot);
