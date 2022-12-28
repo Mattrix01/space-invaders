@@ -7,6 +7,7 @@ let direction = 1;
 let indvadersId;
 let goingRight = true;
 let aliensRemoved = [];
+let results = 0;
 
 // for loop creating 225 div squares
 for (let i = 0; i < 225; i++) {
@@ -100,9 +101,13 @@ function moveInvaders() {
       clearInterval(indvadersId);
     }
   }
+  if (aliensRemoved.length === alienInvaders.length) {
+    resultsDisplay.innerHTML = "YOU WIN!";
+    clearInterval(indvadersId);
+  }
 }
 // execute this function every 0.5 secs
-indvadersId = setInterval(moveInvaders, 100);
+indvadersId = setInterval(moveInvaders, 500);
 
 function shoot(e) {
   let laserId;
@@ -123,7 +128,7 @@ function shoot(e) {
         300
       );
       clearInterval(laserId);
-      // removing alien when hit
+      // removing alien when hit and adding to result
       const alienRemoved = alienInvaders.indexOf(currentLaserIndex);
       aliensRemoved.push(alienRemoved);
       results++;
